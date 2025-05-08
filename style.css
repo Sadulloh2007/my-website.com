@@ -1,0 +1,682 @@
+:root {
+  /* Цветовая схема */
+  --primary: #f8f8f8;
+  --secondary: #eeedf8;
+  --background: #f8fafc;
+  --text: #e8eef8;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --rate-bg: rgba(241, 245, 249, 0.6);
+  --buy-color: #025a09;
+  --sell-color: #ff0000;
+  --accent-1: #ffffff;
+  --accent-2: #3b82f6;
+  --accent-3: #f59e0b;
+  --accent-4: #ec4899;
+
+  /* Градиенты для кнопок */
+  --btn-gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --btn-hover-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  
+  /* Тени для неоморфизма */
+  --neumorph-shadow: 8px 8px 16px rgba(0,0,0,0.1), 
+                    -8px -8px 16px rgba(255,255,255,0.8);
+  --neumorph-inset: inset 4px 4px 8px rgba(0,0,0,0.1), 
+                   inset -4px -4px 8px rgba(255,255,255,0.8);
+
+  /* Анимации */
+  --transition-default: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --background: #ffffff;
+  --text: #f8fafc;
+  --card-bg: rgba(247, 247, 248, 0.9);
+  --rate-bg: rgba(227, 231, 241, 0.6);
+  --primary: #ffffff;
+  --secondary: #ebecf5;
+  --buy-color: #125800;
+  --sell-color: #ff0000;
+  --btn-gradient: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+  --neumorph-shadow: 8px 8px 16px rgba(0,0,0,0.3), 
+                    -8px -8px 16px rgba(255,255,255,0.05);
+}
+
+/* Базовые стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 1.5vw, 16px);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Баннеры */
+.banner {
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner svg text {
+  animation: text-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes text-glow {
+  from { filter: drop-shadow(0 0 2px rgba(255,255,255,0.5)); }
+  to { filter: drop-shadow(0 0 8px rgba(255,255,255,0.8)); }
+}
+
+.banner svg circle {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.banner.secondary {
+  margin: 2rem auto;
+  max-width: 800px;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--transition-default);
+}
+
+/* Шапка */
+.header {
+  padding: 2rem 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+/* Компактный стиль для карточки конвертера */
+.converter-card {
+  max-width: 380px;               /* Ограничиваем ширину карточки */
+  padding: 1rem 1.5rem;           /* Уменьшаем внутренние отступы */
+  margin: 1.5rem auto;            /* Уменьшаем внешние отступы */
+  border-radius: 16px;
+  background: var(--card-bg);
+  /* Если используется эффект glassmorphism, оставьте или адаптируйте его */
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+}
+
+/* Компактное оформление полей ввода */
+.converter-card .input-field input {
+  font-size: 2rem;                /* Размер шрифта немного меньше */
+  padding: 0.2rem 2rem;           /* Уменьшаем отступы внутри поля ввода */
+  border: 2px solid var(--rate-bg);
+  border-radius: 12px;
+  background: var(--rate-bg);
+  transition: var(--transition-default);
+}
+
+/* Компактные выпадающие списки */
+.converter-card .currency-select select {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Компактная кнопка обмена валют */
+.swap-btn-wrapper {
+  margin: 0.0 rem 0;              /* Отступ сверху/снизу для кнопки обмена */
+}
+
+.swap-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  border-radius: 50%;
+  background: var(--btn-gradient);
+  color: white;
+  box-shadow: var(--neumorph-shadow);
+  transition: transform 0.3s ease;
+}
+
+/* Опционально уменьшите отступы между элементами в группе */
+.currency-group {
+  gap: 0.5rem;
+}
+
+/* Стиль для фиксированного индикатора курса (если он используется) */
+.fixed-rate-display {
+  margin-top: 0.5rem;           
+  text-align: center;           
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+[data-theme="dark"] .glassmorphism {
+  background: rgba(30, 30, 46, 0.25) !important;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.converter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.converter-header h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+.currency-group {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.input-field {
+  position: relative;
+  transition: var(--transition-default);
+}
+
+.input-field input {
+  width: 100%;
+  padding: 1.5rem;
+  border: 2px solid var(--rate-bg);
+  border-radius: 16px;
+  font-size: 1.1rem;
+  background: var(--rate-bg);
+  transition: var(--transition-default);
+}
+
+.input-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none;
+}
+
+.currency-select {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.currency-select select {
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  border: none;
+  background: var(--card-bg);
+  border-radius: 8px;
+  appearance: none;
+  cursor: pointer;
+  transition: var(--transition-default);
+}
+
+/* Кнопки */
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-default);
+  position: relative;
+  overflow: hidden;
+  background: var(--btn-gradient);
+  color: white;
+  box-shadow: var(--neumorph-shadow);
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 25%,
+    rgba(255,255,255,0.2) 50%,
+    transparent 75%
+  );
+  transform: translateX(100%);
+  transition: transform 0.6s ease;
+}
+
+button:hover::after {
+  transform: translateX(-50%);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: var(--neumorph-inset);
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.refresh-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Курсы валют */
+.currencies-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  padding: 2rem 0;
+}
+
+.currency-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.currency-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.currency-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.currency-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.accent-1 { background: var(--accent-1); }
+.accent-2 { background: var(--accent-2); }
+.accent-3 { background: var(--accent-3); }
+.accent-4 { background: var(--accent-4); }
+
+.rate-container {
+  display: grid;
+  gap: 1rem;
+}
+
+.rate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--rate-bg);
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.rate-item:hover {
+  transform: scale(1.02);
+}
+
+.rate {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.buy { color: var(--buy-color); }
+.sell { color: var(--sell-color); }
+
+/* Переключатель темы */
+.theme-toggle {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle .fa-sun {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .fa-sun {
+  display: block;
+}
+[data-theme="light"] .refresh-btn {
+  background: var(--btn-gradient) !important;
+  color: white;
+  border: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .currency-group {
+    grid-template-columns: 1fr;
+  }
+  
+  .converter-card {
+    padding: 1.5rem;
+  }
+  
+  .header h1 {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  @keyframes zoomInFade {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .header h1 {
+    animation: zoomInFade 1s ease forwards;
+  }
+  
+  .theme-toggle {
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+/* Дополнительные анимации */
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.currency-card {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+.currency-card:nth-child(1) { animation-delay: 0.1s; }
+.currency-card:nth-child(2) { animation-delay: 0.2s; }
+.currency-card:nth-child(3) { animation-delay: 0.3s; }
+.currency-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* CTA кнопка */
+.cta-button {
+  display: inline-block;
+  margin-left: 1rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 999px;
+  background: var(--btn-gradient);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-default);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* чтобы фон был позади контента */
+  background: linear-gradient(-45deg, #ffffff, 
+  
+  #4ba6ca, #02016d, #5ca1b3);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+}
+:root {
+  /* Цветовая схема */
+  --primary: #6366f1;
+  --secondary: #4f46e5;
+  --background: #f8fafc;
+  --text: #1e293b;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --rate-bg: rgba(241, 245, 249, 0.6);
+  --buy-color: #085002;
+  --sell-color: #ff0000;
+  --accent-1: #8b5cf6;
+  --accent-2: #3b82f6;
+  --accent-3: #f59e0b;
+  --accent-4: #ec4899;
+  --btn-gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --btn-hover-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  --neumorph-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.8);
+  --neumorph-inset: inset 4px 4px 8px rgba(0, 0, 0, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+  --transition-default: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Фон страницы с анимированным градиентом */
+body {
+  background: linear-gradient(-45deg, #6366f1, #0ce6e6, #818cf8, #2c2eb6);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Анимация движения фонового градиента */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Остальные базовые стили остаются без изменений */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 1.5vw, 16px);
+}
+
+/* Шапка сайта и баннер */
+.header {
+  padding: 2rem 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+/* Здесь остаются твои оригинальные стили для конвертера, карточек валют, баннеров и т.п. */
+/* … (Оставь здесь оставшуюся часть твоего исходного кода) */
+
+/* === Новые стили и анимации ниже === */
+
+/* Анимация заголовка (плавное появление и увеличение) */
+.animated-title {
+  animation: zoomInFade 1.2s ease-out forwards;
+}
+@keyframes zoomInFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* "Дыхательная" анимация для карточек валют */
+.currency-card {
+  animation: breathe 6s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+}
+
+/* Стили для кнопки обмена валют (swap) */
+.swap-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swap-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--btn-gradient);
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: var(--neumorph-shadow);
+  transition: transform 0.3s ease;
+}
+
+.swap-btn:hover {
+  transform: rotate(90deg) scale(1.05);
+}
+
+.swap-btn.rotate {
+  animation: rotateOnce 0.6s ease-in-out;
+}
+
+@keyframes rotateOnce {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Анимация для кнопки смены темы (theme-toggle) */
+/* Эффект при наведении и при нажатии */
+.theme-toggle {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.theme-toggle:active {
+  transform: rotate(360deg) scale(0.95);
+}
+/* Анимация для обновления значений курсов */
+.rate.updated {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
